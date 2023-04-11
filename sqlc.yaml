@@ -1,0 +1,16 @@
+version: "2"
+sql:
+  - schema: "migrations/mysql"
+    queries: "app/infrastructure/mysql/query/"
+    engine: "mysql"
+    gen:
+      go:
+        out: "app/infrastructure/mysql/sqlc"
+        emit_result_struct_pointers: true
+        overrides:
+          - column: "*.updated"
+            go_type:
+              type: "*time.Time"
+          - column: "*.deleted"
+            go_type:
+              type: "*time.Time"

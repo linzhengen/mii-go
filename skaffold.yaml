@@ -1,0 +1,21 @@
+# doc: https://skaffold.dev/docs/references/yaml
+apiVersion: skaffold/v2beta19
+kind: Config
+
+profiles:
+  - name: dev
+    deploy:
+      statusCheckDeadlineSeconds: 60
+      helm:
+        releases:
+          - name: mariadb
+            repo: https://charts.bitnami.com/bitnami
+            remoteChart: mariadb
+            version: 11.5.1
+            namespace: mariadb
+            createNamespace: true
+            setValues:
+              auth.database: mii-go
+              auth.rootPassword: password#123
+
+

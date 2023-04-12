@@ -7,10 +7,12 @@ package sqlc
 
 import (
 	"context"
+	"time"
 )
 
 const findUserById = `-- name: FindUserById :one
-SELECT id, name, password, email, status, created, updated, deleted FROM users
+SELECT id, name, password, email, status, created, updated, deleted
+FROM users
 WHERE id = ? LIMIT 1
 `
 
@@ -28,4 +30,35 @@ func (q *Queries) FindUserById(ctx context.Context, id string) (*User, error) {
 		&i.Deleted,
 	)
 	return &i, err
+}
+
+const updateUser = `-- name: UpdateUser :exec
+UPDATE users
+SET name     = ?,
+    password = ?,
+    email    = ?,
+    status   = ?,
+    updated  = ?
+WHERE id = ?
+`
+
+type UpdateUserParams struct {
+	Name     string
+	Password string
+	Email    string
+	Status   string
+	Updated  *time.Time
+	ID       string
+}
+
+func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) error {
+	_, err := q.db.ExecContext(ctx, updateUser,
+		arg.Name,
+		arg.Password,
+		arg.Email,
+		arg.Status,
+		arg.Updated,
+		arg.ID,
+	)
+	return err
 }

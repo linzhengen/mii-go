@@ -1,0 +1,5 @@
+fullnameOverridet: mii-go
+livenessProbe:
+  path: /healthz
+readinessProbe:
+  path: /healthz

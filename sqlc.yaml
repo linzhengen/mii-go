@@ -1,11 +1,11 @@
 version: "2"
 sql:
   - schema: "migrations/mysql"
-    queries: "app/infrastructure/mysql/query/"
+    queries: "app/infrastructure/persistence/mysql/query/"
     engine: "mysql"
     gen:
       go:
-        out: "app/infrastructure/mysql/sqlc"
+        out: "app/infrastructure/persistence/mysql/sqlc"
         emit_result_struct_pointers: true
         overrides:
           - column: "*.updated"

@@ -4,6 +4,14 @@ kind: Config
 
 profiles:
   - name: dev
+    build:
+      tagPolicy:
+        gitCommit: {}
+      artifacts:
+        - image: mii-go
+          docker:
+            dockerfile: dev.Dockerfile
+
     deploy:
       statusCheckDeadlineSeconds: 60
       helm:
@@ -17,5 +25,15 @@ profiles:
             setValues:
               auth.database: mii-go
               auth.rootPassword: password#123
-
-
+          - name: mii-go
+            repo: https://linzhengen.github.io/helm-charts
+            remoteChart: web
+            version: 0.1.4
+            namespace: mii-go
+            createNamespace: true
+            setValueTemplates:
+              image.repository: "{{.IMAGE_NAME}}"
+              image.tag: "{{.IMAGE_TAG}}"
+            valuesFiles:
+              - ./helm/values/base.values.yaml
+              - ./helm/values/local.values.yaml

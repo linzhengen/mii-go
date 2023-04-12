@@ -37,3 +37,10 @@ profiles:
             valuesFiles:
               - ./helm/values/base.values.yaml
               - ./helm/values/local.values.yaml
+
+    portForward:
+      - resourceType: service
+        resourceName: mariadb
+        namespace: mariadb
+        port: 3306
+        localPort: 3306

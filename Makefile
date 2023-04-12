@@ -11,4 +11,7 @@ dev:
 	skaffold dev -v debug -p dev --wait-for-deletions=true --kube-context=minikube
 
 tunnel:
-	minikube service mii-go --url -n ddd-gin-admin
+	#minikube service mii-go-web --url -n mii-go
+	minikube service mariadb --url -n mariadb
+
+migrate:

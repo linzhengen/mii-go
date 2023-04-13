@@ -5,7 +5,7 @@ import (
 	"github.com/linzhengen/mii-go/app/infrastructure/persistence/mysql/sqlc"
 	"github.com/linzhengen/mii-go/app/infrastructure/user"
 	"github.com/linzhengen/mii-go/app/interface/api/handler"
-	"github.com/linzhengen/mii-go/app/interface/api/route"
+	"github.com/linzhengen/mii-go/app/interface/api/router"
 	"github.com/linzhengen/mii-go/app/usecase"
 	"github.com/linzhengen/mii-go/config"
 	"go.uber.org/dig"
@@ -30,7 +30,7 @@ func NewApi(envCfg config.EnvConfig) *dig.Container {
 
 	// interface
 	must(c.Provide(handler.NewHealthHandler))
-	must(c.Provide(route.New))
+	must(c.Provide(router.New))
 
 	return c
 }

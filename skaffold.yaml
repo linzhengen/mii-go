@@ -23,7 +23,7 @@ profiles:
             namespace: mariadb
             createNamespace: true
             setValues:
-              auth.database: mii-go
+              auth.database: mii
               auth.rootPassword: password#123
           - name: mii-go
             repo: https://linzhengen.github.io/helm-charts

@@ -3,7 +3,7 @@ package router
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/linzhengen/mii-go/app/interface/api/handler"
+	"github.com/linzhengen/mii-go/internal/interface/api/handler"
 	"net/http"
 )
 

@@ -2,8 +2,8 @@ package user
 
 import (
 	"context"
-	"github.com/linzhengen/mii-go/app/domain/user"
-	"github.com/linzhengen/mii-go/app/infrastructure/persistence/mysql/sqlc"
+	"github.com/linzhengen/mii-go/internal/domain/user"
+	"github.com/linzhengen/mii-go/internal/infrastructure/persistence/mysql/sqlc"
 )
 
 type repositoryImpl struct {

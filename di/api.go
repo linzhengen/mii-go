@@ -2,13 +2,13 @@ package di
 
 import (
 	"database/sql"
-	"github.com/linzhengen/mii-go/app/infrastructure/persistence/mysql/sqlc"
-	"github.com/linzhengen/mii-go/app/infrastructure/trans"
-	"github.com/linzhengen/mii-go/app/infrastructure/user"
-	"github.com/linzhengen/mii-go/app/interface/api/handler"
-	"github.com/linzhengen/mii-go/app/interface/api/router"
-	"github.com/linzhengen/mii-go/app/usecase"
 	"github.com/linzhengen/mii-go/config"
+	"github.com/linzhengen/mii-go/internal/infrastructure/persistence/mysql/sqlc"
+	"github.com/linzhengen/mii-go/internal/infrastructure/trans"
+	"github.com/linzhengen/mii-go/internal/infrastructure/user"
+	"github.com/linzhengen/mii-go/internal/interface/api/handler"
+	"github.com/linzhengen/mii-go/internal/interface/api/router"
+	"github.com/linzhengen/mii-go/internal/usecase"
 	"go.uber.org/dig"
 )
 

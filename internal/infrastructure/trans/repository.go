@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/linzhengen/mii-go/app/domain/contextx"
-	"github.com/linzhengen/mii-go/app/domain/trans"
+	"github.com/linzhengen/mii-go/internal/domain/contextx"
+	"github.com/linzhengen/mii-go/internal/domain/trans"
 )
 
 func New(db *sql.DB) trans.Repository {

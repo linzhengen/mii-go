@@ -2,10 +2,10 @@ package handler
 
 import (
 	"github.com/go-chi/chi/v5"
-	"github.com/linzhengen/mii-go/app/interface/api"
-	"github.com/linzhengen/mii-go/app/interface/api/request"
-	"github.com/linzhengen/mii-go/app/interface/api/response"
-	"github.com/linzhengen/mii-go/app/usecase"
+	"github.com/linzhengen/mii-go/internal/interface/api"
+	"github.com/linzhengen/mii-go/internal/interface/api/request"
+	"github.com/linzhengen/mii-go/internal/interface/api/response"
+	"github.com/linzhengen/mii-go/internal/usecase"
 	"github.com/linzhengen/mii-go/pkg/logger"
 	"net/http"
 )

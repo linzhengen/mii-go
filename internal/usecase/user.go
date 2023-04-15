@@ -3,10 +3,10 @@ package usecase
 import (
 	"context"
 	"database/sql"
-	"github.com/linzhengen/mii-go/app/domain/trans"
-	"github.com/linzhengen/mii-go/app/domain/user"
+	"github.com/linzhengen/mii-go/internal/domain/trans"
+	"github.com/linzhengen/mii-go/internal/domain/user"
 	"github.com/linzhengen/mii-go/pkg/hash"
-	"github.com/linzhengen/mii-go/pkg/util/uuid"
+	"github.com/linzhengen/mii-go/pkg/uuid"
 )
 
 func NewUserUseCase(

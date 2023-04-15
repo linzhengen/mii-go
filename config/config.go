@@ -35,7 +35,7 @@ type MySQL struct {
 }
 
 func (m MySQL) DSN() string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s",
+	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true",
 		m.User, m.Pass, m.Host, m.Port, m.DBName)
 }
 
@@ -48,7 +48,7 @@ type CORS struct {
 }
 
 type Migration struct {
-	Auto bool `env:"MIGRATION_AUTO,default=false""`
+	Auto bool `env:"MIGRATION_AUTO,default=false"`
 }
 
 func New(ctx context.Context) EnvConfig {

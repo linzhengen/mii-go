@@ -9,6 +9,7 @@ import (
 
 func New(
 	healthHandler handler.HealthHandler,
+	userHandler handler.UserHandler,
 ) http.Handler {
 	r := chi.NewRouter()
 	r.Use(middleware.RequestID)
@@ -16,5 +17,9 @@ func New(
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Get("/healthz", healthHandler.Get)
+	r.Route("/api/v1", func(r chi.Router) {
+		r.Get("/users/{userId}", userHandler.Get)
+		r.Post("/users", userHandler.Post)
+	})
 	return r
 }

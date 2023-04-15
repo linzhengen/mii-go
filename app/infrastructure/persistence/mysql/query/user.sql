@@ -9,5 +9,21 @@ SET name     = ?,
     password = ?,
     email    = ?,
     status   = ?,
-    updated  = ?
+    updated  = now()
 WHERE id = ?;
+
+-- name: CreateUser :execresult
+INSERT INTO users (id,
+                   name,
+                   password,
+                   email,
+                   status,
+                   created,
+                   updated)
+VALUES (?,
+        ?,
+        ?,
+        ?,
+        ?,
+        now(),
+        now());

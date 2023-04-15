@@ -24,9 +24,33 @@ func (r repositoryImpl) FineOne(ctx context.Context, id string) (*user.User, err
 		Name:     u.Name,
 		Password: u.Password,
 		Email:    u.Email,
-		Status:   u.Status,
+		Status:   user.Status(u.Status),
 		Created:  u.Created,
 		Updated:  u.Updated,
 		Deleted:  u.Deleted,
 	}, nil
+}
+
+func (r repositoryImpl) Create(ctx context.Context, u *user.User) error {
+	_, err := r.q.CreateUser(ctx, sqlc.CreateUserParams{
+		ID:       u.ID,
+		Name:     u.Name,
+		Password: u.Password,
+		Email:    u.Email,
+		Status:   string(u.Status),
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r repositoryImpl) Update(ctx context.Context, u *user.User) error {
+	return r.q.UpdateUser(ctx, sqlc.UpdateUserParams{
+		Name:     u.Name,
+		Password: u.Password,
+		Email:    u.Email,
+		Status:   string(u.Status),
+		ID:       u.ID,
+	})
 }

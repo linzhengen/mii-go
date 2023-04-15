@@ -16,5 +16,6 @@ type healthHandler struct {
 }
 
 func (h healthHandler) Get(w http.ResponseWriter, r *http.Request) {
+	//nolint:errcheck
 	w.Write([]byte("ok"))
 }

@@ -72,7 +72,7 @@ func dbMigrate(envCfg config.EnvConfig, db *sql.DB) error {
 		}
 		driver, err := migrateMysql.WithInstance(db, &migrateMysql.Config{})
 		if err != nil {
-			logger.Severef("failed create mysql migration instance, err: %s", err)
+			logger.Severef("failed create mysql instance driver, err: %s", err)
 		}
 		m, err := migrate.NewWithInstance(
 			"iofs",
@@ -80,6 +80,9 @@ func dbMigrate(envCfg config.EnvConfig, db *sql.DB) error {
 			"mysql",
 			driver,
 		)
+		if err != nil {
+			logger.Severef("failed create mysql migration instance, err: %s", err)
+		}
 		return m.Up()
 	}
 	return nil

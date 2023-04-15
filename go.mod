@@ -12,8 +12,11 @@ require (
 )
 
 require (
+	github.com/ajg/form v1.5.1 // indirect
 	github.com/fatih/color v1.15.0 // indirect
+	github.com/go-chi/render v1.0.2 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect

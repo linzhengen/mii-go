@@ -7,8 +7,43 @@ package sqlc
 
 import (
 	"context"
-	"time"
+	"database/sql"
 )
+
+const createUser = `-- name: CreateUser :execresult
+INSERT INTO users (id,
+                   name,
+                   password,
+                   email,
+                   status,
+                   created,
+                   updated)
+VALUES (?,
+        ?,
+        ?,
+        ?,
+        ?,
+        now(),
+        now())
+`
+
+type CreateUserParams struct {
+	ID       string
+	Name     string
+	Password string
+	Email    string
+	Status   string
+}
+
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (sql.Result, error) {
+	return q.db.ExecContext(ctx, createUser,
+		arg.ID,
+		arg.Name,
+		arg.Password,
+		arg.Email,
+		arg.Status,
+	)
+}
 
 const findUserById = `-- name: FindUserById :one
 SELECT id, name, password, email, status, created, updated, deleted
@@ -38,7 +73,7 @@ SET name     = ?,
     password = ?,
     email    = ?,
     status   = ?,
-    updated  = ?
+    updated  = now()
 WHERE id = ?
 `
 
@@ -47,7 +82,6 @@ type UpdateUserParams struct {
 	Password string
 	Email    string
 	Status   string
-	Updated  *time.Time
 	ID       string
 }
 
@@ -57,7 +91,6 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) error {
 		arg.Password,
 		arg.Email,
 		arg.Status,
-		arg.Updated,
 		arg.ID,
 	)
 	return err

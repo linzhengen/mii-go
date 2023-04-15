@@ -9,12 +9,13 @@ import (
 )
 
 type EnvConfig struct {
-	AppEnv  string `env:"APP_ENV,required"`
-	WebHost string `env:"WEB_HOST,default="`
-	WebPort int    `env:"WEB_PORT,default=8080"`
-	Log     Log
-	MySQL   MySQL
-	CORS    CORS
+	AppEnv    string `env:"APP_ENV,required"`
+	WebHost   string `env:"WEB_HOST,default="`
+	WebPort   int    `env:"WEB_PORT,default=8080"`
+	Log       Log
+	MySQL     MySQL
+	CORS      CORS
+	Migration Migration
 }
 
 type Log struct {
@@ -44,6 +45,10 @@ type CORS struct {
 	AllowHeaders     []string      `env:"CORS_ALLOW_HEADERS"`
 	AllowCredentials bool          `env:"CORS_ALLOW_CREDENTIALS,default=true"`
 	MaxAge           time.Duration `env:"CORS_MAX_AGE,default=7200s"`
+}
+
+type Migration struct {
+	Auto bool `env:"MIGRATION_AUTO,default=false""`
 }
 
 func New(ctx context.Context) EnvConfig {

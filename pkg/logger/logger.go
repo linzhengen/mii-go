@@ -17,9 +17,9 @@ var (
 	Debug       = logx.Debug
 	Debugf      = logx.Debugf
 	Error       = logx.Error
-	Errorf      = logx.Error
+	Errorf      = logx.Errorf
 	Info        = logx.Info
-	Infof       = logx.Info
+	Infof       = logx.Infof
 	Severe      = logx.Severe
 	Severef     = logx.Severef
 	WithContext = logx.WithContext

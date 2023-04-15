@@ -1,7 +1,7 @@
 package di
 
 import (
-	"github.com/linzhengen/mii-go/app/infrastructure/persistence/mysql"
+	"database/sql"
 	"github.com/linzhengen/mii-go/app/infrastructure/persistence/mysql/sqlc"
 	"github.com/linzhengen/mii-go/app/infrastructure/user"
 	"github.com/linzhengen/mii-go/app/interface/api/handler"
@@ -11,17 +11,20 @@ import (
 	"go.uber.org/dig"
 )
 
-func NewApi(envCfg config.EnvConfig) *dig.Container {
+func NewApi(envCfg config.EnvConfig, db *sql.DB) *dig.Container {
 	c := dig.New()
 	// config
 	must(c.Provide(func() config.MySQL {
 		return envCfg.MySQL
 	}))
+	// db
+	must(c.Provide(func() *sql.DB {
+		return db
+	}))
 
 	// domain
 
 	// infrastructure
-	must(c.Provide(mysql.NewConn))
 	must(c.Provide(user.New))
 	must(c.Provide(sqlc.New))
 

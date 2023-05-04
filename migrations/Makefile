@@ -1,4 +1,4 @@
-.phony: migrate-up migrate-down migrate-create
+.PHONY: migrate-up migrate-down migrate-create
 #DB_USR := $(shell grep DB_USER .env | cut -d '=' -f2)
 #DB_PASSWORD := $(shell grep DB_PASSWORD .env | cut -d '=' -f2)
 #DB_HOST := $(shell grep DB_HOST .env | cut -d '=' -f2)

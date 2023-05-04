@@ -3,6 +3,7 @@ module github.com/linzhengen/mii-go
 go 1.20
 
 require (
+	github.com/bufbuild/connect-go v1.7.0
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-chi/render v1.0.2
 	github.com/golang-migrate/migrate/v4 v4.15.2
@@ -12,6 +13,7 @@ require (
 	github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230417153749-41a096d45fc8
 	go.uber.org/dig v1.17.0
 	go.uber.org/zap v1.24.0
+	google.golang.org/protobuf v1.30.0
 )
 
 require (

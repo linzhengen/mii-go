@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package user.v1;
+
+option go_package = "userv1";
+
+import "google/protobuf/timestamp.proto";
+
+service UserService {
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+  rpc UpdatePasswordUser(UpdatePasswordUserRequest) returns (UpdatePasswordUserResponse);
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message GetUserResponse {
+  User user = 1;
+}
+
+message CreateUserRequest {
+  string name = 1;
+  string password = 2;
+  string email = 3;
+}
+
+message CreateUserResponse {
+  User user = 1;
+}
+
+message UpdateUserRequest {
+  string name = 1;
+  string email = 3;
+}
+
+message UpdateUserResponse {
+  User user = 1;
+}
+
+message UpdatePasswordUserRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message UpdatePasswordUserResponse {
+  User user = 1;
+}
+
+message User {
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_ACTIVE = 1;
+    STATUS_INACTIVE = 2;
+  }
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  Status status = 5;
+  google.protobuf.Timestamp created = 6;
+  google.protobuf.Timestamp updated = 7;
+}

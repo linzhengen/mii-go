@@ -1,10 +1,12 @@
 CREATE TABLE `roles`
 (
-    `id`      varchar(255) NOT NULL,
-    `name`    varchar(255) NOT NULL,
-    `status`  varchar(255) NOT NULL,
-    `created` timestamp    NOT NULL,
-    `updated` timestamp,
-    `deleted` timestamp,
+    `id`       varchar(255)  NOT NULL,
+    `name`     varchar(255)  NOT NULL,
+    `apiGroup` varchar(255)  NOT NULL, -- endpoint, menu,
+    `resource` varchar(1024) NOT NULL, -- POST./api/v1/users, GET./api/v1/users/{id}, User, Role, Menu
+    `created`  timestamp     NOT NULL,
+    `updated`  timestamp,
+    `deleted`  timestamp,
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB DEFAULT CHARACTER SET utf8mb4;
+) ENGINE = InnoDB
+  DEFAULT CHARACTER SET utf8mb4;

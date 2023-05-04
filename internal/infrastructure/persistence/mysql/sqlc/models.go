@@ -9,12 +9,13 @@ import (
 )
 
 type Role struct {
-	ID      string
-	Name    string
-	Status  string
-	Created time.Time
-	Updated *time.Time
-	Deleted *time.Time
+	ID       string
+	Name     string
+	Apigroup string
+	Resource string
+	Created  time.Time
+	Updated  *time.Time
+	Deleted  *time.Time
 }
 
 type User struct {

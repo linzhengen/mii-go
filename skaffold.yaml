@@ -10,7 +10,7 @@ profiles:
       artifacts:
         - image: mii-go
           docker:
-            dockerfile: dev.Dockerfile
+            dockerfile: Dockerfile
 
     deploy:
       statusCheckDeadlineSeconds: 60

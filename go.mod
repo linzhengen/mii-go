@@ -10,7 +10,7 @@ require (
 	github.com/sethvargo/go-envconfig v0.9.0
 	github.com/zeromicro/go-zero v1.5.2
 	github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230417153749-41a096d45fc8
-	go.uber.org/dig v1.16.1
+	go.uber.org/dig v1.17.0
 	go.uber.org/zap v1.24.0
 )
 

@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: v1/role/role.proto
+// source: role/v1/role.proto
 
-package role
+package v1role
 
 import (
 	context "context"
@@ -214,5 +214,5 @@ var RoleService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "v1/role/role.proto",
+	Metadata: "role/v1/role.proto",
 }

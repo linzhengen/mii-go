@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package role.v1;
 
-option go_package = "v1/role";
+option go_package = "v1/v1role";
 
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";

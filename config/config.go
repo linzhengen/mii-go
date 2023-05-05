@@ -3,15 +3,18 @@ package config
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/linzhengen/mii-go/pkg/logger"
 	"github.com/sethvargo/go-envconfig"
-	"time"
 )
 
 type EnvConfig struct {
 	AppEnv    string `env:"APP_ENV,required"`
 	WebHost   string `env:"WEB_HOST,default="`
 	WebPort   int    `env:"WEB_PORT,default=8080"`
+	GrpcHost  string `env:"GRPC_HOST,default="`
+	GrpcPort  int    `env:"GRPC_PORT,default=8081"`
 	Log       Log
 	MySQL     MySQL
 	CORS      CORS

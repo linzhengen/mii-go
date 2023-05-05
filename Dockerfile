@@ -11,4 +11,4 @@ WORKDIR /
 
 COPY --from=build /app /app
 
-ENTRYPOINT ["/app"]
+ENTRYPOINT ["/app", "rest"]

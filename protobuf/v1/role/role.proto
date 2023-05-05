@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package role.v1;
+
+option go_package = "v1/role";
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+
+service RoleService {
+  rpc GetRole(GetRoleRequest) returns (GetRoleResponse) {
+    option (google.api.http) = {
+      get: "/v1/roles/{id}"
+    };
+  }
+  rpc ListRole(ListRoleRequest) returns (ListRoleResponse) {
+    option (google.api.http) = {
+      get: "/v1/roles"
+    };
+  }
+  rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
+    option (google.api.http) = {
+      post: "/v1/roles"
+      body: "*"
+    };
+  }
+  rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
+    option (google.api.http) = {
+      put: "/v1/roles/{role.id}"
+      body: "*"
+    };
+  }
+}
+
+message GetRoleRequest {
+  string id = 1;
+}
+
+message GetRoleResponse {
+  Role role = 1;
+}
+
+message ListRoleRequest {
+  int32 page = 1;
+  int32 size = 2;
+}
+
+message ListRoleResponse {
+  repeated Role roles = 1;
+  int32 total = 2;
+}
+
+message CreateRoleRequest {
+  Role role = 1;
+}
+
+message CreateRoleResponse {
+  Role role = 1;
+}
+
+message UpdateRoleRequest {
+  Role role = 1;
+}
+
+message UpdateRoleResponse {
+  Role role = 1;
+}
+
+message Role {
+  string id = 1;
+  string name = 2;
+  string api_group = 3;
+  string resource = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}

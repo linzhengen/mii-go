@@ -1,14 +1,14 @@
 package register
 
 import (
-	"github.com/linzhengen/mii-go/protobuf/go/v1/user"
+	v1user "github.com/linzhengen/mii-go/protobuf/go/user/v1"
 	"google.golang.org/grpc"
 )
 
 func New(
-	userHandler user.UserServiceServer,
+	userHandler v1user.UserServiceServer,
 ) (s *grpc.Server) {
 	s = grpc.NewServer()
-	user.RegisterUserServiceServer(s, userHandler)
+	v1user.RegisterUserServiceServer(s, userHandler)
 	return s
 }

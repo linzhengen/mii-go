@@ -2,7 +2,7 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/linzhengen/mii-go/protobuf/gen
+    default: github.com/linzhengen/mii-go/protobuf/go
 plugins:
   - plugin: buf.build/protocolbuffers/go
     out: go

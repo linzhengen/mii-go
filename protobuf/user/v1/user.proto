@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package user.v1;
+package com.github.linzhengen.user.v1;
 
 option go_package = "userv1";
 
@@ -8,6 +8,7 @@ import "google/protobuf/timestamp.proto";
 
 service UserService {
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  rpc ListUser(ListUserRequest) returns (ListUserResponse);
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
   rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
   rpc UpdatePasswordUser(UpdatePasswordUserRequest) returns (UpdatePasswordUserResponse);
@@ -21,10 +22,22 @@ message GetUserResponse {
   User user = 1;
 }
 
+message ListUserRequest {
+  int32 page = 1;
+  int32 size = 2;
+  repeated string user_ids = 3;
+  repeated string user_emails = 4;
+  repeated string user_name = 5;
+  Status status = 6;
+}
+
+message ListUserResponse {
+  repeated User user = 1;
+  int32 total = 2;
+}
+
 message CreateUserRequest {
-  string name = 1;
-  string password = 2;
-  string email = 3;
+  User user = 1;
 }
 
 message CreateUserResponse {
@@ -32,8 +45,7 @@ message CreateUserResponse {
 }
 
 message UpdateUserRequest {
-  string name = 1;
-  string email = 3;
+  User user = 1;
 }
 
 message UpdateUserResponse {
@@ -41,7 +53,7 @@ message UpdateUserResponse {
 }
 
 message UpdatePasswordUserRequest {
-  string email = 1;
+  string id = 1;
   string password = 2;
 }
 
@@ -49,12 +61,13 @@ message UpdatePasswordUserResponse {
   User user = 1;
 }
 
+enum Status {
+  STATUS_UNSPECIFIED = 0;
+  STATUS_ACTIVE = 1;
+  STATUS_INACTIVE = 2;
+}
+
 message User {
-  enum Status {
-    STATUS_UNSPECIFIED = 0;
-    STATUS_ACTIVE = 1;
-    STATUS_INACTIVE = 2;
-  }
   string id = 1;
   string name = 2;
   string email = 3;

@@ -8,7 +8,7 @@ import (
 	context "context"
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	v1 "github.com/linzhengen/mii-go/protobuf/gen/user/v1"
+	v1 "github.com/linzhengen/mii-go/protobuf/go/user/v1"
 	http "net/http"
 	strings "strings"
 )
@@ -22,7 +22,7 @@ const _ = connect_go.IsAtLeastVersion0_1_0
 
 const (
 	// UserServiceName is the fully-qualified name of the UserService service.
-	UserServiceName = "user.v1.UserService"
+	UserServiceName = "com.github.linzhengen.user.v1.UserService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -34,28 +34,31 @@ const (
 // period.
 const (
 	// UserServiceGetUserProcedure is the fully-qualified name of the UserService's GetUser RPC.
-	UserServiceGetUserProcedure = "/user.v1.UserService/GetUser"
+	UserServiceGetUserProcedure = "/com.github.linzhengen.user.v1.UserService/GetUser"
+	// UserServiceListUserProcedure is the fully-qualified name of the UserService's ListUser RPC.
+	UserServiceListUserProcedure = "/com.github.linzhengen.user.v1.UserService/ListUser"
 	// UserServiceCreateUserProcedure is the fully-qualified name of the UserService's CreateUser RPC.
-	UserServiceCreateUserProcedure = "/user.v1.UserService/CreateUser"
+	UserServiceCreateUserProcedure = "/com.github.linzhengen.user.v1.UserService/CreateUser"
 	// UserServiceUpdateUserProcedure is the fully-qualified name of the UserService's UpdateUser RPC.
-	UserServiceUpdateUserProcedure = "/user.v1.UserService/UpdateUser"
+	UserServiceUpdateUserProcedure = "/com.github.linzhengen.user.v1.UserService/UpdateUser"
 	// UserServiceUpdatePasswordUserProcedure is the fully-qualified name of the UserService's
 	// UpdatePasswordUser RPC.
-	UserServiceUpdatePasswordUserProcedure = "/user.v1.UserService/UpdatePasswordUser"
+	UserServiceUpdatePasswordUserProcedure = "/com.github.linzhengen.user.v1.UserService/UpdatePasswordUser"
 )
 
-// UserServiceClient is a client for the user.v1.UserService service.
+// UserServiceClient is a client for the com.github.linzhengen.user.v1.UserService service.
 type UserServiceClient interface {
 	GetUser(context.Context, *connect_go.Request[v1.GetUserRequest]) (*connect_go.Response[v1.GetUserResponse], error)
+	ListUser(context.Context, *connect_go.Request[v1.ListUserRequest]) (*connect_go.Response[v1.ListUserResponse], error)
 	CreateUser(context.Context, *connect_go.Request[v1.CreateUserRequest]) (*connect_go.Response[v1.CreateUserResponse], error)
 	UpdateUser(context.Context, *connect_go.Request[v1.UpdateUserRequest]) (*connect_go.Response[v1.UpdateUserResponse], error)
 	UpdatePasswordUser(context.Context, *connect_go.Request[v1.UpdatePasswordUserRequest]) (*connect_go.Response[v1.UpdatePasswordUserResponse], error)
 }
 
-// NewUserServiceClient constructs a client for the user.v1.UserService service. By default, it uses
-// the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
-// uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or
-// connect.WithGRPCWeb() options.
+// NewUserServiceClient constructs a client for the com.github.linzhengen.user.v1.UserService
+// service. By default, it uses the Connect protocol with the binary Protobuf Codec, asks for
+// gzipped responses, and sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply
+// the connect.WithGRPC() or connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
@@ -65,6 +68,11 @@ func NewUserServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts
 		getUser: connect_go.NewClient[v1.GetUserRequest, v1.GetUserResponse](
 			httpClient,
 			baseURL+UserServiceGetUserProcedure,
+			opts...,
+		),
+		listUser: connect_go.NewClient[v1.ListUserRequest, v1.ListUserResponse](
+			httpClient,
+			baseURL+UserServiceListUserProcedure,
 			opts...,
 		),
 		createUser: connect_go.NewClient[v1.CreateUserRequest, v1.CreateUserResponse](
@@ -88,34 +96,41 @@ func NewUserServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts
 // userServiceClient implements UserServiceClient.
 type userServiceClient struct {
 	getUser            *connect_go.Client[v1.GetUserRequest, v1.GetUserResponse]
+	listUser           *connect_go.Client[v1.ListUserRequest, v1.ListUserResponse]
 	createUser         *connect_go.Client[v1.CreateUserRequest, v1.CreateUserResponse]
 	updateUser         *connect_go.Client[v1.UpdateUserRequest, v1.UpdateUserResponse]
 	updatePasswordUser *connect_go.Client[v1.UpdatePasswordUserRequest, v1.UpdatePasswordUserResponse]
 }
 
-// GetUser calls user.v1.UserService.GetUser.
+// GetUser calls com.github.linzhengen.user.v1.UserService.GetUser.
 func (c *userServiceClient) GetUser(ctx context.Context, req *connect_go.Request[v1.GetUserRequest]) (*connect_go.Response[v1.GetUserResponse], error) {
 	return c.getUser.CallUnary(ctx, req)
 }
 
-// CreateUser calls user.v1.UserService.CreateUser.
+// ListUser calls com.github.linzhengen.user.v1.UserService.ListUser.
+func (c *userServiceClient) ListUser(ctx context.Context, req *connect_go.Request[v1.ListUserRequest]) (*connect_go.Response[v1.ListUserResponse], error) {
+	return c.listUser.CallUnary(ctx, req)
+}
+
+// CreateUser calls com.github.linzhengen.user.v1.UserService.CreateUser.
 func (c *userServiceClient) CreateUser(ctx context.Context, req *connect_go.Request[v1.CreateUserRequest]) (*connect_go.Response[v1.CreateUserResponse], error) {
 	return c.createUser.CallUnary(ctx, req)
 }
 
-// UpdateUser calls user.v1.UserService.UpdateUser.
+// UpdateUser calls com.github.linzhengen.user.v1.UserService.UpdateUser.
 func (c *userServiceClient) UpdateUser(ctx context.Context, req *connect_go.Request[v1.UpdateUserRequest]) (*connect_go.Response[v1.UpdateUserResponse], error) {
 	return c.updateUser.CallUnary(ctx, req)
 }
 
-// UpdatePasswordUser calls user.v1.UserService.UpdatePasswordUser.
+// UpdatePasswordUser calls com.github.linzhengen.user.v1.UserService.UpdatePasswordUser.
 func (c *userServiceClient) UpdatePasswordUser(ctx context.Context, req *connect_go.Request[v1.UpdatePasswordUserRequest]) (*connect_go.Response[v1.UpdatePasswordUserResponse], error) {
 	return c.updatePasswordUser.CallUnary(ctx, req)
 }
 
-// UserServiceHandler is an implementation of the user.v1.UserService service.
+// UserServiceHandler is an implementation of the com.github.linzhengen.user.v1.UserService service.
 type UserServiceHandler interface {
 	GetUser(context.Context, *connect_go.Request[v1.GetUserRequest]) (*connect_go.Response[v1.GetUserResponse], error)
+	ListUser(context.Context, *connect_go.Request[v1.ListUserRequest]) (*connect_go.Response[v1.ListUserResponse], error)
 	CreateUser(context.Context, *connect_go.Request[v1.CreateUserRequest]) (*connect_go.Response[v1.CreateUserResponse], error)
 	UpdateUser(context.Context, *connect_go.Request[v1.UpdateUserRequest]) (*connect_go.Response[v1.UpdateUserResponse], error)
 	UpdatePasswordUser(context.Context, *connect_go.Request[v1.UpdatePasswordUserRequest]) (*connect_go.Response[v1.UpdatePasswordUserResponse], error)
@@ -133,6 +148,11 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect_go.HandlerOpt
 		svc.GetUser,
 		opts...,
 	))
+	mux.Handle(UserServiceListUserProcedure, connect_go.NewUnaryHandler(
+		UserServiceListUserProcedure,
+		svc.ListUser,
+		opts...,
+	))
 	mux.Handle(UserServiceCreateUserProcedure, connect_go.NewUnaryHandler(
 		UserServiceCreateUserProcedure,
 		svc.CreateUser,
@@ -148,24 +168,28 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect_go.HandlerOpt
 		svc.UpdatePasswordUser,
 		opts...,
 	))
-	return "/user.v1.UserService/", mux
+	return "/com.github.linzhengen.user.v1.UserService/", mux
 }
 
 // UnimplementedUserServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedUserServiceHandler struct{}
 
 func (UnimplementedUserServiceHandler) GetUser(context.Context, *connect_go.Request[v1.GetUserRequest]) (*connect_go.Response[v1.GetUserResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("user.v1.UserService.GetUser is not implemented"))
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("com.github.linzhengen.user.v1.UserService.GetUser is not implemented"))
+}
+
+func (UnimplementedUserServiceHandler) ListUser(context.Context, *connect_go.Request[v1.ListUserRequest]) (*connect_go.Response[v1.ListUserResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("com.github.linzhengen.user.v1.UserService.ListUser is not implemented"))
 }
 
 func (UnimplementedUserServiceHandler) CreateUser(context.Context, *connect_go.Request[v1.CreateUserRequest]) (*connect_go.Response[v1.CreateUserResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("user.v1.UserService.CreateUser is not implemented"))
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("com.github.linzhengen.user.v1.UserService.CreateUser is not implemented"))
 }
 
 func (UnimplementedUserServiceHandler) UpdateUser(context.Context, *connect_go.Request[v1.UpdateUserRequest]) (*connect_go.Response[v1.UpdateUserResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("user.v1.UserService.UpdateUser is not implemented"))
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("com.github.linzhengen.user.v1.UserService.UpdateUser is not implemented"))
 }
 
 func (UnimplementedUserServiceHandler) UpdatePasswordUser(context.Context, *connect_go.Request[v1.UpdatePasswordUserRequest]) (*connect_go.Response[v1.UpdatePasswordUserResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("user.v1.UserService.UpdatePasswordUser is not implemented"))
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("com.github.linzhengen.user.v1.UserService.UpdatePasswordUser is not implemented"))
 }

@@ -209,6 +209,9 @@
                     "email": {
                       "type": "string"
                     },
+                    "password": {
+                      "type": "string"
+                    },
                     "status": {
                       "$ref": "#/definitions/userv1Status"
                     },
@@ -366,6 +369,9 @@
           "type": "string"
         },
         "email": {
+          "type": "string"
+        },
+        "password": {
           "type": "string"
         },
         "status": {

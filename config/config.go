@@ -11,14 +11,40 @@ import (
 
 type EnvConfig struct {
 	AppEnv    string `env:"APP_ENV,required"`
-	WebHost   string `env:"WEB_HOST,default="`
-	WebPort   int    `env:"WEB_PORT,default=8080"`
-	GrpcHost  string `env:"GRPC_HOST,default="`
-	GrpcPort  int    `env:"GRPC_PORT,default=8081"`
+	Rest      Rest
+	Grpc      Grpc
+	GrpcGW    GrpcGW
 	Log       Log
 	MySQL     MySQL
 	CORS      CORS
 	Migration Migration
+}
+
+type Rest struct {
+	Host string `env:"WEB_HOST,default="`
+	Port int    `env:"WEB_PORT,default=8080"`
+}
+
+func (g Rest) Addr() string {
+	return fmt.Sprintf("%s:%d", g.Host, g.Port)
+}
+
+type Grpc struct {
+	Host string `env:"GRPC_HOST,default="`
+	Port int    `env:"GRPC_PORT,default=8081"`
+}
+
+func (g Grpc) Addr() string {
+	return fmt.Sprintf("%s:%d", g.Host, g.Port)
+}
+
+type GrpcGW struct {
+	Host string `env:"GRPC_GW_HOST,default="`
+	Port int    `env:"GRPC_GW_PORT,default=8082"`
+}
+
+func (g GrpcGW) Addr() string {
+	return fmt.Sprintf("%s:%d", g.Host, g.Port)
 }
 
 type Log struct {

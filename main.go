@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"embed"
-	"fmt"
 	"net"
 	"net/http"
 	"os/signal"
@@ -14,6 +13,7 @@ import (
 	"github.com/golang-migrate/migrate/v4"
 	migrateMysql "github.com/golang-migrate/migrate/v4/database/mysql"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
+	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
 	"github.com/linzhengen/mii-go/di"
 	"google.golang.org/grpc"
@@ -25,9 +25,7 @@ import (
 )
 
 func main() {
-	rootCmd.AddCommand(restCmd)
-	rootCmd.AddCommand(grpcCmd)
-	rootCmd.AddCommand(dbMigrateCmd)
+	rootCmd.AddCommand(restCmd, grpcCmd, grpcGWCmd, dbMigrateCmd)
 	err := rootCmd.Execute()
 	if err != nil {
 		logger.Severef("failed execute, err: %v", err)
@@ -47,7 +45,7 @@ var grpcCmd = &cobra.Command{
 			}); err != nil {
 				logger.Severef("invoke grpc server err: %v", err)
 			}
-			lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d", envCfg.GrpcHost, envCfg.GrpcPort))
+			lis, err := net.Listen("tcp", envCfg.Grpc.Addr())
 			if err != nil {
 				logger.Severef("failed to listen: %v", err)
 			}
@@ -73,15 +71,53 @@ var grpcCmd = &cobra.Command{
 			}()
 			select {
 			case <-ch:
-				logger.Infof("Graceful stopped")
+				logger.Infof("graceful stopped")
 			case <-time.After(10 * time.Second):
 				// took too long, manually close open transports
 				// e.g. watch streams
-				logger.Infof("Graceful stop timeout, force stop!!")
+				logger.Infof("graceful stop timeout, force stop!!")
 				s.Stop()
 				<-ch
 			}
-			logger.Info("Server successfully stopped")
+			logger.Info("server successfully stopped")
+		})
+	},
+}
+
+var grpcGWCmd = &cobra.Command{
+	Use: "grpc-gw",
+	Run: func(cmd *cobra.Command, args []string) {
+		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
+			c := di.NewDI(envCfg, db)
+			var serveMux *runtime.ServeMux
+			if err := c.Invoke(func(mux *runtime.ServeMux) {
+				serveMux = mux
+			}); err != nil {
+				logger.Severef("invoke serveMux err: %v", err)
+			}
+			srv := &http.Server{
+				Addr:    envCfg.GrpcGW.Addr(),
+				Handler: serveMux,
+			}
+			go func() {
+				logger.Infof("staring serve, addr: %s", srv.Addr)
+				if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+					logger.Severef("listen: %v", err)
+				}
+			}()
+
+			<-ctx.Done()
+
+			stop()
+			logger.Info("shutting down gracefully")
+
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+			if err := srv.Shutdown(ctx); err != nil {
+				logger.Severef("server forced to shutdown: %v", err)
+			}
+
+			logger.Info("server successfully stopped")
 		})
 	},
 }
@@ -98,7 +134,7 @@ var restCmd = &cobra.Command{
 				logger.Severef("invoke httpHandler err: %v", err)
 			}
 			srv := &http.Server{
-				Addr:    fmt.Sprintf("%s:%d", envCfg.WebHost, envCfg.WebPort),
+				Addr:    envCfg.Rest.Addr(),
 				Handler: httpHandler,
 			}
 			go func() {
@@ -116,10 +152,10 @@ var restCmd = &cobra.Command{
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
 			if err := srv.Shutdown(ctx); err != nil {
-				logger.Severef("Server forced to shutdown: %v", err)
+				logger.Severef("server forced to shutdown: %v", err)
 			}
 
-			logger.Info("Server successfully stopped")
+			logger.Info("server successfully stopped")
 		})
 	},
 }

@@ -4,10 +4,14 @@ import (
 	"database/sql"
 	"log"
 
+	"github.com/spf13/cobra"
+
 	"github.com/linzhengen/mii-go/config"
 	"github.com/linzhengen/mii-go/internal/infrastructure/persistence/mysql/sqlc"
 	"github.com/linzhengen/mii-go/internal/infrastructure/trans"
 	"github.com/linzhengen/mii-go/internal/infrastructure/user"
+	cmdRegister "github.com/linzhengen/mii-go/internal/interface/cmd/register"
+	cmdHandler "github.com/linzhengen/mii-go/internal/interface/grpc/handler"
 	grpcHandler "github.com/linzhengen/mii-go/internal/interface/grpc/handler"
 	"github.com/linzhengen/mii-go/internal/interface/grpc/register"
 	gwRegister "github.com/linzhengen/mii-go/internal/interface/grpcgw/register"
@@ -23,7 +27,7 @@ func must(err error) {
 	}
 }
 
-func NewDI(envCfg config.EnvConfig, db *sql.DB) *dig.Container {
+func NewDI(envCfg config.EnvConfig, db *sql.DB, rootCmd *cobra.Command) *dig.Container {
 	c := dig.New()
 	// config
 	must(c.Provide(func() config.MySQL {
@@ -36,7 +40,9 @@ func NewDI(envCfg config.EnvConfig, db *sql.DB) *dig.Container {
 	must(c.Provide(func() sqlc.DBTX {
 		return db
 	}))
-
+	must(c.Provide(func() *cobra.Command {
+		return rootCmd
+	}))
 	// domain
 
 	// infrastructure
@@ -58,5 +64,9 @@ func NewDI(envCfg config.EnvConfig, db *sql.DB) *dig.Container {
 
 	// interface (grpcgw)
 	must(c.Provide(gwRegister.New))
+
+	// interface (cmd)
+	must(c.Provide(cmdHandler.NewUserHandler))
+	must(c.Provide(cmdRegister.New))
 	return c
 }

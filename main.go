@@ -25,20 +25,31 @@ import (
 )
 
 func main() {
-	rootCmd.AddCommand(restCmd, grpcCmd, grpcGWCmd, dbMigrateCmd)
+	rootCmd.AddCommand(
+		restCmd,
+		grpcCmd,
+		grpcGWCmd,
+		dbMigrateCmd,
+		runCmd,
+	)
 	err := rootCmd.Execute()
 	if err != nil {
 		logger.Severef("failed execute, err: %v", err)
 	}
 }
 
-var rootCmd = &cobra.Command{}
+var rootCmd = &cobra.Command{
+	Use: "mii",
+	Run: func(cmd *cobra.Command, args []string) {
+		cmd.HelpFunc()(cmd, args)
+	},
+}
 
 var grpcCmd = &cobra.Command{
 	Use: "grpc",
 	Run: func(cmd *cobra.Command, args []string) {
 		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
-			c := di.NewDI(envCfg, db)
+			c := di.NewDI(envCfg, db, rootCmd)
 			var s *grpc.Server
 			if err := c.Invoke(func(server *grpc.Server) {
 				s = server
@@ -88,7 +99,7 @@ var grpcGWCmd = &cobra.Command{
 	Use: "grpc-gw",
 	Run: func(cmd *cobra.Command, args []string) {
 		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
-			c := di.NewDI(envCfg, db)
+			c := di.NewDI(envCfg, db, rootCmd)
 			var serveMux *runtime.ServeMux
 			if err := c.Invoke(func(mux *runtime.ServeMux) {
 				serveMux = mux
@@ -126,7 +137,7 @@ var restCmd = &cobra.Command{
 	Use: "rest",
 	Run: func(cmd *cobra.Command, args []string) {
 		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
-			c := di.NewDI(envCfg, db)
+			c := di.NewDI(envCfg, db, rootCmd)
 			var httpHandler http.Handler
 			if err := c.Invoke(func(h http.Handler) {
 				httpHandler = h
@@ -156,6 +167,23 @@ var restCmd = &cobra.Command{
 			}
 
 			logger.Info("server successfully stopped")
+		})
+	},
+}
+
+var runCmd = &cobra.Command{
+	Use: "run",
+	Run: func(cmd *cobra.Command, args []string) {
+		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
+			c := di.NewDI(envCfg, db, rootCmd)
+			var _ *cobra.Command
+			if err := c.Invoke(func(c *cobra.Command) {
+				_ = c
+			}); err != nil {
+				logger.Severef("invoke command err: %v", err)
+			}
+			<-ctx.Done()
+			stop()
 		})
 	},
 }

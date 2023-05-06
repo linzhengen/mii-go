@@ -4,13 +4,13 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/linzhengen/mii-go/internal/interface/grpc/register"
-
 	"github.com/linzhengen/mii-go/config"
 	"github.com/linzhengen/mii-go/internal/infrastructure/persistence/mysql/sqlc"
 	"github.com/linzhengen/mii-go/internal/infrastructure/trans"
 	"github.com/linzhengen/mii-go/internal/infrastructure/user"
 	grpcHandler "github.com/linzhengen/mii-go/internal/interface/grpc/handler"
+	"github.com/linzhengen/mii-go/internal/interface/grpc/register"
+	gwRegister "github.com/linzhengen/mii-go/internal/interface/grpcgw/register"
 	"github.com/linzhengen/mii-go/internal/interface/rest/handler"
 	"github.com/linzhengen/mii-go/internal/interface/rest/router"
 	"github.com/linzhengen/mii-go/internal/usecase"
@@ -55,5 +55,8 @@ func NewDI(envCfg config.EnvConfig, db *sql.DB) *dig.Container {
 	// interface (grpc)
 	must(c.Provide(grpcHandler.NewUserHandler))
 	must(c.Provide(register.New))
+
+	// interface (grpcgw)
+	must(c.Provide(gwRegister.New))
 	return c
 }

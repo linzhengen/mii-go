@@ -4,20 +4,18 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/spf13/cobra"
-
 	"github.com/linzhengen/mii-go/config"
 	"github.com/linzhengen/mii-go/internal/infrastructure/persistence/mysql/sqlc"
 	"github.com/linzhengen/mii-go/internal/infrastructure/trans"
 	"github.com/linzhengen/mii-go/internal/infrastructure/user"
-	cmdRegister "github.com/linzhengen/mii-go/internal/interface/cmd/register"
-	cmdHandler "github.com/linzhengen/mii-go/internal/interface/grpc/handler"
+	"github.com/linzhengen/mii-go/internal/interface/cmd"
 	grpcHandler "github.com/linzhengen/mii-go/internal/interface/grpc/handler"
 	"github.com/linzhengen/mii-go/internal/interface/grpc/register"
 	gwRegister "github.com/linzhengen/mii-go/internal/interface/grpcgw/register"
 	"github.com/linzhengen/mii-go/internal/interface/rest/handler"
 	"github.com/linzhengen/mii-go/internal/interface/rest/router"
 	"github.com/linzhengen/mii-go/internal/usecase"
+	"github.com/spf13/cobra"
 	"go.uber.org/dig"
 )
 
@@ -33,6 +31,9 @@ func NewDI(envCfg config.EnvConfig, db *sql.DB, rootCmd *cobra.Command) *dig.Con
 	must(c.Provide(func() config.MySQL {
 		return envCfg.MySQL
 	}))
+	must(c.Provide(func() config.EnvConfig {
+		return envCfg
+	}))
 	// db
 	must(c.Provide(func() *sql.DB {
 		return db
@@ -40,9 +41,9 @@ func NewDI(envCfg config.EnvConfig, db *sql.DB, rootCmd *cobra.Command) *dig.Con
 	must(c.Provide(func() sqlc.DBTX {
 		return db
 	}))
-	must(c.Provide(func() *cobra.Command {
-		return rootCmd
-	}))
+	//must(c.Provide(func() *cobra.Command {
+	//	return rootCmd
+	//}))
 	// domain
 
 	// infrastructure
@@ -66,7 +67,6 @@ func NewDI(envCfg config.EnvConfig, db *sql.DB, rootCmd *cobra.Command) *dig.Con
 	must(c.Provide(gwRegister.New))
 
 	// interface (cmd)
-	must(c.Provide(cmdHandler.NewUserHandler))
-	must(c.Provide(cmdRegister.New))
+	must(c.Provide(cmd.NewUserCmd))
 	return c
 }

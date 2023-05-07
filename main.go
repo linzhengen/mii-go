@@ -39,14 +39,16 @@ func main() {
 }
 
 var rootCmd = &cobra.Command{
-	Use: "mii",
+	Use:   "mii",
+	Short: "mii is a Golang project template for DDD",
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.HelpFunc()(cmd, args)
 	},
 }
 
 var grpcCmd = &cobra.Command{
-	Use: "grpc",
+	Use:   "grpc",
+	Short: "start grpc server",
 	Run: func(cmd *cobra.Command, args []string) {
 		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
 			c := di.NewDI(envCfg, db, rootCmd)
@@ -96,7 +98,8 @@ var grpcCmd = &cobra.Command{
 }
 
 var grpcGWCmd = &cobra.Command{
-	Use: "grpc-gw",
+	Use:   "grpc-gw",
+	Short: "start grpc gateway server",
 	Run: func(cmd *cobra.Command, args []string) {
 		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
 			c := di.NewDI(envCfg, db, rootCmd)
@@ -134,7 +137,8 @@ var grpcGWCmd = &cobra.Command{
 }
 
 var restCmd = &cobra.Command{
-	Use: "rest",
+	Use:   "rest",
+	Short: "start rest server",
 	Run: func(cmd *cobra.Command, args []string) {
 		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
 			c := di.NewDI(envCfg, db, rootCmd)
@@ -172,27 +176,21 @@ var restCmd = &cobra.Command{
 }
 
 var runCmd = &cobra.Command{
-	Use: "run",
+	Use:   "run",
+	Short: "run command",
 	Run: func(cmd *cobra.Command, args []string) {
-		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
-			c := di.NewDI(envCfg, db, rootCmd)
-			var _ *cobra.Command
-			if err := c.Invoke(func(c *cobra.Command) {
-				_ = c
-			}); err != nil {
-				logger.Severef("invoke command err: %v", err)
-			}
-			<-ctx.Done()
-			stop()
-		})
+		cmd.HelpFunc()(cmd, args)
 	},
 }
+
+// TODO: add runCmd sub command
 
 //go:embed migrations/mysql/*.sql
 var migrationsFs embed.FS
 
 var dbMigrateCmd = &cobra.Command{
-	Use: "db-migrate",
+	Use:   "db-migrate",
+	Short: "migrate db",
 	Run: func(cmd *cobra.Command, args []string) {
 		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
 			d, err := iofs.New(migrationsFs, "migrations/mysql")

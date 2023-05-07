@@ -17,7 +17,7 @@ import (
 )
 
 func New(
-	envCfg *config.EnvConfig,
+	envCfg config.EnvConfig,
 ) *runtime.ServeMux {
 	ctx := context.Background()
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}

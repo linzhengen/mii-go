@@ -9,8 +9,8 @@ import (
 
 func New(
 	userHandler v1user.UserServiceServer,
-) (s *grpc.Server) {
-	s = grpc.NewServer()
+) *grpc.Server {
+	s := grpc.NewServer()
 	healthServer := health.NewServer()
 	v1user.RegisterUserServiceServer(s, userHandler)
 	healthpb.RegisterHealthServer(s, healthServer)

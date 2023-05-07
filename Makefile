@@ -15,7 +15,7 @@ tunnel:
 	minikube service mii-go-web --url -n mii-go
 
 migrate:
-	migrate -path migrations/mysql -database "mysql://root:password#123@tcp(localhost:56836)/mii" up
+	migrate -path cmd/app/migrations/mysql -database "mysql://root:password#123@tcp(localhost:56836)/mii" up
 
 generate:
 	sqlc generate

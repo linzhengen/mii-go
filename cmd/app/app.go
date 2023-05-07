@@ -14,14 +14,12 @@ import (
 	migrateMysql "github.com/golang-migrate/migrate/v4/database/mysql"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-
-	"github.com/linzhengen/mii-go/di"
-	"google.golang.org/grpc"
-
 	"github.com/linzhengen/mii-go/config"
+	"github.com/linzhengen/mii-go/di"
 	"github.com/linzhengen/mii-go/internal/infrastructure/persistence/mysql"
 	"github.com/linzhengen/mii-go/pkg/logger"
 	"github.com/spf13/cobra"
+	"google.golang.org/grpc"
 )
 
 func main() {
@@ -30,7 +28,6 @@ func main() {
 		grpcCmd,
 		grpcGWCmd,
 		dbMigrateCmd,
-		runCmd,
 	)
 	err := rootCmd.Execute()
 	if err != nil {
@@ -40,7 +37,7 @@ func main() {
 
 var rootCmd = &cobra.Command{
 	Use:   "mii",
-	Short: "mii is a Golang project template for DDD",
+	Short: "mii is a Golang project template",
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.HelpFunc()(cmd, args)
 	},
@@ -51,7 +48,7 @@ var grpcCmd = &cobra.Command{
 	Short: "start grpc server",
 	Run: func(cmd *cobra.Command, args []string) {
 		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
-			c := di.NewDI(envCfg, db, rootCmd)
+			c := di.NewDI(envCfg, db)
 			var s *grpc.Server
 			if err := c.Invoke(func(server *grpc.Server) {
 				s = server
@@ -102,7 +99,7 @@ var grpcGWCmd = &cobra.Command{
 	Short: "start grpc gateway server",
 	Run: func(cmd *cobra.Command, args []string) {
 		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
-			c := di.NewDI(envCfg, db, rootCmd)
+			c := di.NewDI(envCfg, db)
 			var serveMux *runtime.ServeMux
 			if err := c.Invoke(func(mux *runtime.ServeMux) {
 				serveMux = mux
@@ -141,7 +138,7 @@ var restCmd = &cobra.Command{
 	Short: "start rest server",
 	Run: func(cmd *cobra.Command, args []string) {
 		withInit(func(ctx context.Context, stop context.CancelFunc, envCfg config.EnvConfig, db *sql.DB) {
-			c := di.NewDI(envCfg, db, rootCmd)
+			c := di.NewDI(envCfg, db)
 			var httpHandler http.Handler
 			if err := c.Invoke(func(h http.Handler) {
 				httpHandler = h
@@ -174,16 +171,6 @@ var restCmd = &cobra.Command{
 		})
 	},
 }
-
-var runCmd = &cobra.Command{
-	Use:   "run",
-	Short: "run command",
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
-}
-
-// TODO: add runCmd sub command
 
 //go:embed migrations/mysql/*.sql
 var migrationsFs embed.FS

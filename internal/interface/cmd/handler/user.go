@@ -1,4 +1,4 @@
-package cmd
+package handler
 
 import (
 	"github.com/linzhengen/mii-go/internal/usecase"
@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func NewUserCmd(userUseCase usecase.UserUseCase) *cobra.Command {
+func NewUserHandler(userUseCase usecase.UserUseCase) UserHandler {
 	var cmd = &cobra.Command{
 		Use:   "user",
 		Short: "manage user",
@@ -14,20 +14,25 @@ func NewUserCmd(userUseCase usecase.UserUseCase) *cobra.Command {
 			cmd.HelpFunc()(cmd, args)
 		},
 	}
-	c := &userCmd{userUseCase: userUseCase}
-	cmd.AddCommand(c.GetUser())
-	return cmd
+	return &userHandler{cmd: cmd, userUseCase: userUseCase}
 }
 
-type UserCmd interface {
-	GetUser() *cobra.Command
+type UserHandler interface {
+	Command() *cobra.Command
+	GetUser()
 }
 
-type userCmd struct {
+type userHandler struct {
+	cmd         *cobra.Command
 	userUseCase usecase.UserUseCase
 }
 
-func (u userCmd) GetUser() *cobra.Command {
+func (u *userHandler) Command() *cobra.Command {
+	u.GetUser()
+	return u.cmd
+}
+
+func (u *userHandler) GetUser() {
 	var userID string
 	var getUserCmd = &cobra.Command{
 		Use: "get",
@@ -40,5 +45,5 @@ func (u userCmd) GetUser() *cobra.Command {
 		},
 	}
 	getUserCmd.Flags().StringVar(&userID, "userId", "", "The ID of the user")
-	return getUserCmd
+	u.Command().AddCommand(getUserCmd)
 }

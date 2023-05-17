@@ -1608,6 +1608,8 @@ github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230417153749-41a096d45fc8 h
 github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230417153749-41a096d45fc8/go.mod h1:c+IFEPKeasHCmjNQ5F6TjDIjCH6/OoYftvjtgSoMsHo=
 github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230512042740-4f9dc902daf2 h1:6v6XpF42kWVxBK82rNTkyJ3ZmNYZ3R07s9p6Yc3ijQI=
 github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230512042740-4f9dc902daf2/go.mod h1:qVg1rpNFSdNIdGiNope7OqpMjl+cN0TrnB+9bjodKAM=
+github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230517160033-92ba832728db h1:a0BknsZVCPW18TaAXXyJGYSgQugpFWdNN5R2LF5QJx0=
+github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230517160033-92ba832728db/go.mod h1:qVg1rpNFSdNIdGiNope7OqpMjl+cN0TrnB+9bjodKAM=
 gitlab.com/nyarla/go-crypt v0.0.0-20160106005555-d9a5dc2b789b/go.mod h1:T3BPAOm2cqquPa0MKWeNkmOM5RQsRhkrwMWonFMN7fE=
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.etcd.io/bbolt v1.3.3/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=

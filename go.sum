@@ -845,6 +845,8 @@ github.com/go-sql-driver/mysql v1.4.0/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG
 github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/go-sql-driver/mysql v1.7.0 h1:ueSltNNllEqE3qcWBTD0iQd3IpL/6U+mJxLkazJ7YPc=
 github.com/go-sql-driver/mysql v1.7.0/go.mod h1:OXbVy3sEdcQ2Doequ6Z5BW6fXNQTmx+9S1MCJN5yJMI=
+github.com/go-sql-driver/mysql v1.7.1 h1:lUIinVbN1DY0xBg0eMOzmmtGoHwWBbvnWubQUrtU8EI=
+github.com/go-sql-driver/mysql v1.7.1/go.mod h1:OXbVy3sEdcQ2Doequ6Z5BW6fXNQTmx+9S1MCJN5yJMI=
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
 github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0/go.mod h1:fyg7847qk6SyHyPtNmDHnmrv/HOrqktSC+C9fM+CJOE=
 github.com/gobuffalo/attrs v0.0.0-20190224210810-a9411de4debd/go.mod h1:4duuawTqi2wkkpB4ePgWMaai6/Kc6WEz83bhFwpHzj0=
@@ -1606,6 +1608,8 @@ github.com/zenazn/goji v0.9.0/go.mod h1:7S9M489iMyHBNxwZnk9/EHS098H4/F6TATF2mIxt
 github.com/zeromicro/go-zero v1.5.1/go.mod h1:bGYm4XWsGN9GhDsO2O2BngpVoWjf3Eog2a5hUOMhlXs=
 github.com/zeromicro/go-zero v1.5.2 h1:vpMlZacCMtgdtYzKI3OMyhS6mZ9UQctiAh0J7gIq31I=
 github.com/zeromicro/go-zero v1.5.2/go.mod h1:ndCd1nMMAdEMZgPfdm1fpavHUdBW0ykB6ckCRaSG10w=
+github.com/zeromicro/go-zero v1.5.3 h1:9poyd+raeL7gSMUu6P19N7bssTppieR2j7Oos2j1yFQ=
+github.com/zeromicro/go-zero v1.5.3/go.mod h1:dmoBpgJTxt9KWmgrNGpv06XxZRPXMakrxUVgROFAR3g=
 github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230417153749-41a096d45fc8 h1:3Dp9jc2si+rGJeKuWT8at+AH5K3NrkuXGiFPtgThEgQ=
 github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230417153749-41a096d45fc8/go.mod h1:c+IFEPKeasHCmjNQ5F6TjDIjCH6/OoYftvjtgSoMsHo=
 github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230512042740-4f9dc902daf2 h1:6v6XpF42kWVxBK82rNTkyJ3ZmNYZ3R07s9p6Yc3ijQI=

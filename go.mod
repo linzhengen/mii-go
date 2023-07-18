@@ -11,7 +11,7 @@ require (
 	github.com/sethvargo/go-envconfig v0.9.0
 	github.com/spf13/cobra v1.7.0
 	github.com/zeromicro/go-zero v1.5.4
-	github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230517160033-92ba832728db
+	github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230708101417-16e73a5d116c
 	go.uber.org/dig v1.17.0
 	go.uber.org/zap v1.24.0
 	google.golang.org/genproto v0.0.0-20230530153820-e85fd2cbaebc

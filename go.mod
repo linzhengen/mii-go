@@ -13,7 +13,7 @@ require (
 	github.com/zeromicro/go-zero v1.5.4
 	github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20230708101417-16e73a5d116c
 	go.uber.org/dig v1.17.0
-	go.uber.org/zap v1.24.0
+	go.uber.org/zap v1.26.0
 	google.golang.org/genproto v0.0.0-20230530153820-e85fd2cbaebc
 	google.golang.org/genproto/googleapis/api v0.0.0-20230530153820-e85fd2cbaebc
 	google.golang.org/grpc v1.56.2

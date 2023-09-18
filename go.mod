@@ -15,7 +15,7 @@ require (
 	go.uber.org/dig v1.17.0
 	go.uber.org/zap v1.26.0
 	google.golang.org/genproto v0.0.0-20230913181813-007df8e322eb
-	google.golang.org/genproto/googleapis/api v0.0.0-20230822172742-b8732ec3820d
+	google.golang.org/genproto/googleapis/api v0.0.0-20230913181813-007df8e322eb
 	google.golang.org/grpc v1.58.1
 	google.golang.org/protobuf v1.31.0
 )

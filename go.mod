@@ -1,6 +1,8 @@
 module github.com/linzhengen/mii-go
 
-go 1.20
+go 1.21
+
+toolchain go1.22.0
 
 require (
 	github.com/go-chi/chi/v5 v5.0.12
@@ -8,7 +10,7 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.17.0
 	github.com/google/uuid v1.6.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.18.0
-	github.com/sethvargo/go-envconfig v0.9.0
+	github.com/sethvargo/go-envconfig v1.0.0
 	github.com/spf13/cobra v1.8.0
 	github.com/zeromicro/go-zero v1.6.2
 	github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20231030135404-af9ae855016f

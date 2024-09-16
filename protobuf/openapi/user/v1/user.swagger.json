@@ -155,12 +155,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "password": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/UserServiceUpdatePasswordUserBody"
             }
           }
         ],
@@ -198,34 +193,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "user": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "$ref": "#/definitions/userv1Status"
-                    },
-                    "created": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updated": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
+              "$ref": "#/definitions/UserServiceUpdateUserBody"
             }
           }
         ],
@@ -266,6 +234,44 @@
     }
   },
   "definitions": {
+    "UserServiceUpdatePasswordUserBody": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "UserServiceUpdateUserBody": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "status": {
+              "$ref": "#/definitions/userv1Status"
+            },
+            "created": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updated": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
     "googlerpcStatus": {
       "type": "object",
       "properties": {

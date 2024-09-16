@@ -143,31 +143,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "role": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "apiGroup": {
-                      "type": "string"
-                    },
-                    "resource": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
+              "$ref": "#/definitions/RoleServiceUpdateRoleBody"
             }
           }
         ],
@@ -178,6 +154,33 @@
     }
   },
   "definitions": {
+    "RoleServiceUpdateRoleBody": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "apiGroup": {
+              "type": "string"
+            },
+            "resource": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {

@@ -1,6 +1,6 @@
 version: "2"
 sql:
-  - schema: "migrations/mysql"
+  - schema: "cmd/app/migrations/mysql"
     queries: "internal/infrastructure/persistence/mysql/query/"
     engine: "mysql"
     gen:

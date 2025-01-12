@@ -8,8 +8,8 @@ UPDATE adminUsers
 SET userName     = ?,
     email        = ?,
     passwordHash = ?,
-    status       = ?,
-    WHERE id = ?;
+    status       = ?
+WHERE id = ?;
 
 -- name: CreateAdminUser :execresult
 INSERT INTO adminUsers (id,

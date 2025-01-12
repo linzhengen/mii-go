@@ -1,10 +1,13 @@
 # doc: https://skaffold.dev/docs/references/yaml
-apiVersion: skaffold/v2beta19
+apiVersion: skaffold/v4beta11
 kind: Config
 
 profiles:
   - name: dev
     build:
+      local:
+        concurrency: 0
+        tryImportMissing: true
       tagPolicy:
         gitCommit: {}
       artifacts:
@@ -21,6 +24,7 @@ profiles:
             remoteChart: mariadb
             version: 11.5.1
             namespace: mariadb
+            wait: true
             createNamespace: true
             setValues:
               auth.database: mii

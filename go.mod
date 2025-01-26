@@ -7,7 +7,7 @@ require (
 	github.com/go-chi/render v1.0.3
 	github.com/golang-migrate/migrate/v4 v4.18.1
 	github.com/google/uuid v1.6.0
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.25.1
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.0
 	github.com/sethvargo/go-envconfig v1.1.0
 	github.com/spf13/cobra v1.8.1
 	github.com/zeromicro/go-zero v1.7.6
@@ -15,7 +15,7 @@ require (
 	go.uber.org/dig v1.18.0
 	go.uber.org/zap v1.27.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20250124145028-65684f501c47
-	google.golang.org/grpc v1.69.2
+	google.golang.org/grpc v1.69.4
 	google.golang.org/protobuf v1.36.4
 )
 

@@ -10,7 +10,7 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.0
 	github.com/sethvargo/go-envconfig v1.1.0
 	github.com/spf13/cobra v1.8.1
-	github.com/zeromicro/go-zero v1.7.6
+	github.com/zeromicro/go-zero v1.8.0
 	github.com/zeromicro/zero-contrib/logx/zapx v0.0.0-20231030135404-af9ae855016f
 	go.uber.org/dig v1.18.0
 	go.uber.org/zap v1.27.0
@@ -36,8 +36,8 @@ require (
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/automaxprocs v1.6.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/net v0.33.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
+	golang.org/x/net v0.34.0 // indirect
+	golang.org/x/sys v0.29.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250124145028-65684f501c47 // indirect
 )

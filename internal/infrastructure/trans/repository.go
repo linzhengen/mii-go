@@ -3,37 +3,48 @@ package trans
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
+
+	"github.com/linzhengen/mii-go/internal/infrastructure/persistence/mysql/sqlc"
+
 	"github.com/linzhengen/mii-go/internal/domain/contextx"
 	"github.com/linzhengen/mii-go/internal/domain/trans"
 )
 
-func New(db *sql.DB) trans.Repository {
+func New(db *sql.DB, q *sqlc.Queries) trans.Repository {
 	return &repository{
 		db: db,
+		q:  q,
 	}
 }
 
 type repository struct {
 	db *sql.DB
+	q  *sqlc.Queries
 }
 
-func (a *repository) ExecTrans(ctx context.Context, fn func(context.Context) error) error {
+func (a *repository) ExecTrans(ctx context.Context, fn func(context.Context) error) (txErr error) {
 	if _, ok := contextx.FromTrans(ctx); ok {
 		return fn(ctx)
 	}
 
 	tx, err := a.db.BeginTx(ctx, nil)
 	if err != nil {
-		return err
+		txErr = err
+		return
 	}
-	err = fn(contextx.NewTrans(ctx, tx))
-	if err != nil {
-		if rbErr := tx.Rollback(); rbErr != nil {
-			return fmt.Errorf("tx err: %v, rb err: %v", err, rbErr)
+	defer func() {
+		if err := tx.Rollback(); !errors.Is(err, sql.ErrTxDone) {
+			txErr = fmt.Errorf("rb err: %w", err)
+			return
 		}
-		return err
+	}()
+	qTx := a.q.WithTx(tx)
+	err = fn(contextx.NewTrans(ctx, qTx))
+	if err != nil {
+		txErr = err
+		return
 	}
-
 	return tx.Commit()
 }

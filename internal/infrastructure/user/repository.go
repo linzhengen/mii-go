@@ -2,7 +2,9 @@ package user
 
 import (
 	"context"
+
 	"github.com/linzhengen/mii-go/internal/domain/user"
+	"github.com/linzhengen/mii-go/internal/infrastructure/persistence/mysql"
 	"github.com/linzhengen/mii-go/internal/infrastructure/persistence/mysql/sqlc"
 )
 
@@ -15,7 +17,7 @@ func New(q *sqlc.Queries) user.Repository {
 }
 
 func (r repositoryImpl) FineOne(ctx context.Context, id string) (*user.User, error) {
-	u, err := r.q.FindUserById(ctx, id)
+	u, err := mysql.GetQ(ctx, r.q).FindUserById(ctx, id)
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +34,7 @@ func (r repositoryImpl) FineOne(ctx context.Context, id string) (*user.User, err
 }
 
 func (r repositoryImpl) Create(ctx context.Context, u *user.User) error {
-	_, err := r.q.CreateUser(ctx, sqlc.CreateUserParams{
+	_, err := mysql.GetQ(ctx, r.q).CreateUser(ctx, sqlc.CreateUserParams{
 		ID:       u.ID,
 		Name:     u.Name,
 		Password: u.Password,
@@ -46,7 +48,7 @@ func (r repositoryImpl) Create(ctx context.Context, u *user.User) error {
 }
 
 func (r repositoryImpl) Update(ctx context.Context, u *user.User) error {
-	return r.q.UpdateUser(ctx, sqlc.UpdateUserParams{
+	return mysql.GetQ(ctx, r.q).UpdateUser(ctx, sqlc.UpdateUserParams{
 		Name:     u.Name,
 		Password: u.Password,
 		Email:    u.Email,

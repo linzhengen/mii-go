@@ -6,7 +6,7 @@ readinessProbe:
   port: 8080
 service:
   port: 8080
-  type: NodePort
+  type: ClusterIP
 image:
   debug: false
 env:

@@ -47,4 +47,9 @@ profiles:
         resourceName: mariadb
         namespace: mariadb
         port: 3306
-        localPort: 3306
+        localPort: 3307
+      - resourceType: service
+        resourceName: mii-go-web
+        namespace: mii-go
+        port: 8080
+        localPort: 8080

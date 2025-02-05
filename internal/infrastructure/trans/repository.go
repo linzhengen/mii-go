@@ -31,20 +31,17 @@ func (a *repository) ExecTrans(ctx context.Context, fn func(context.Context) err
 
 	tx, err := a.db.BeginTx(ctx, nil)
 	if err != nil {
-		txErr = err
-		return
+		return err
 	}
 	defer func() {
 		if err := tx.Rollback(); !errors.Is(err, sql.ErrTxDone) {
 			txErr = fmt.Errorf("rb err: %w", err)
-			return
 		}
 	}()
+
 	qTx := a.q.WithTx(tx)
-	err = fn(contextx.NewTrans(ctx, qTx))
-	if err != nil {
-		txErr = err
-		return
+	if err := fn(contextx.NewTrans(ctx, qTx)); err != nil {
+		return err
 	}
 	return tx.Commit()
 }

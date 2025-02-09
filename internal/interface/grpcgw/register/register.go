@@ -23,7 +23,7 @@ func New(
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
 
 	mux := runtime.NewServeMux()
-	if err := mux.HandlePath(http.MethodGet, "/healthz", healthzServer(ctx, envCfg.Grpc.Addr(), opts)); err != nil {
+	if err := mux.HandlePath(http.MethodGet, "/healthz", healthzServer(envCfg.Grpc.Addr(), opts)); err != nil {
 		logger.Severe(err)
 	}
 
@@ -32,8 +32,8 @@ func New(
 	return mux
 }
 
-func healthzServer(ctx context.Context, endpoint string, opts []grpc.DialOption) runtime.HandlerFunc {
-	conn, err := grpc.DialContext(ctx, endpoint, opts...)
+func healthzServer(endpoint string, opts []grpc.DialOption) runtime.HandlerFunc {
+	conn, err := grpc.NewClient(endpoint, opts...)
 	if err != nil {
 		logger.Severe(err)
 	}

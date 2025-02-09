@@ -34,8 +34,9 @@ func (a *repository) ExecTrans(ctx context.Context, fn func(context.Context) err
 		return err
 	}
 	defer func() {
-		if err := tx.Rollback(); !errors.Is(err, sql.ErrTxDone) {
+		if err := tx.Rollback(); err != nil && !errors.Is(err, sql.ErrTxDone) {
 			txErr = fmt.Errorf("rb err: %w", err)
+			return
 		}
 	}()
 

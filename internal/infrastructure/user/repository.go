@@ -16,7 +16,7 @@ func New(q *sqlc.Queries) user.Repository {
 	return &repositoryImpl{q: q}
 }
 
-func (r repositoryImpl) FineOne(ctx context.Context, id string) (*user.User, error) {
+func (r repositoryImpl) FindOne(ctx context.Context, id string) (*user.User, error) {
 	u, err := mysql.GetQ(ctx, r.q).FindUserById(ctx, id)
 	if err != nil {
 		return nil, err

@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"database/sql"
+
 	"github.com/linzhengen/mii-go/internal/domain/trans"
 	"github.com/linzhengen/mii-go/internal/domain/user"
 	"github.com/linzhengen/mii-go/pkg/hash"
@@ -33,7 +34,7 @@ type userUseCase struct {
 }
 
 func (uc userUseCase) GetUser(ctx context.Context, id string) (*user.User, error) {
-	return uc.userRepo.FineOne(ctx, id)
+	return uc.userRepo.FindOne(ctx, id)
 }
 
 func (uc userUseCase) CreateUser(ctx context.Context, name, password, email string) error {
